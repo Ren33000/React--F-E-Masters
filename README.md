@@ -1,7 +1,10 @@
 <h1 align="center">React course</h1>
 <h3 align="center">FrontEnd masters</h3>
 
-![Banner](http://pets-images.dev-apis.com/pets/wallpaperB.jpg)
+<p align="center">
+  <img src="http://pets-images.dev-apis.com/pets/wallpaperB.jpg" alt="Sublime's custom image"/>
+</p>
+
 
 ## Complete Intro to React, v6
 

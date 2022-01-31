@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
-let modalRoot = document.getElementById("modal");
+let modalRoot;
 
 const Modal = ({ children }) => {
   modalRoot = modalRoot ? modalRoot : document.getElementById("modal");

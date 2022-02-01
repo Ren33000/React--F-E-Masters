@@ -1,35 +1,24 @@
 import { Component } from "react";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import ThemeContext from "./ThemeContext";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import Modal from "./Modal";
-import { PetAPIResponse, Animal } from "./APIResponsesTypes";
 
-class Details extends Component<RouteComponentProps<{ id: string }>> {
-  state = {
-    loading: true,
-    showModal: false,
-    animal: "" as Animal,
-    breed: "",
-    city: "",
-    state: "",
-    description: "",
-    name: "",
-    images: [] as string[],
-  };
+class Details extends Component {
+  state = { loading: true, showModal: false };
 
   async componentDidMount() {
     const res = await fetch(
       `http://pets-v2.dev-apis.com/pets?id=${this.props.match.params.id}`
     );
-    const json = (await res.json()) as PetAPIResponse;
+    const json = await res.json();
     this.setState(Object.assign({ loading: false }, json.pets[0]));
   }
 
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
 
-  adopt = () => (window.location.href = "http://bit.ly/pet-adopt");
+  adopt = () => (window.location = "http://bit.ly/pet-adopt");
 
   render() {
     if (this.state.loading) {
@@ -75,10 +64,10 @@ class Details extends Component<RouteComponentProps<{ id: string }>> {
 
 const DetailsWithRouter = withRouter(Details);
 
-export default function DetailsErrorBoundary(): JSX.Element {
+export default function DetailsErrorBoundary(props) {
   return (
     <ErrorBoundary>
-      <DetailsWithRouter />
+      <DetailsWithRouter {...props} />
     </ErrorBoundary>
   );
 }

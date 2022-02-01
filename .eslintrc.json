@@ -5,8 +5,7 @@
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:react-hooks/recommended",
-    "prettier",
-    "prettier/react"
+    "prettier"
   ],
   "rules": {
     "react/prop-types": 0,
@@ -15,7 +14,7 @@
   "plugins": ["react", "import", "jsx-a11y"],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 2021,
+    "ecmaVersion": 2020,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true

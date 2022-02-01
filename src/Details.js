@@ -16,7 +16,8 @@ class Details extends Component {
     this.setState(Object.assign({ loading: false }, json.pets[0]));
   }
 
-  toogleModal = () => this.setState({ showModal: !this.setState.showModal });
+  toggleModal = () => this.setState({ showModal: !this.state.showModal });
+
   adopt = () => (window.location = "http://bit.ly/pet-adopt");
 
   render() {
@@ -36,7 +37,7 @@ class Details extends Component {
           <ThemeContext.Consumer>
             {([theme]) => (
               <button
-                onClick={this.toogleModal}
+                onClick={this.toggleModal}
                 style={{ backgroundColor: theme }}
               >
                 Adopt {name}
@@ -50,7 +51,7 @@ class Details extends Component {
                 <h1>Would you like to adopt {name}?</h1>
                 <div className="buttons">
                   <button onClick={this.adopt}>Yes</button>
-                  <button onClick={this.toogleModal}>No, I am a monster</button>
+                  <button onClick={this.toggleModal}>No</button>
                 </div>
               </div>
             </Modal>

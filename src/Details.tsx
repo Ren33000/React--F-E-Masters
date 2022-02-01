@@ -1,23 +1,35 @@
 import { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import ThemeContext from "./ThemeContext";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import Modal from "./Modal";
+import { PetAPIResponse, Animal } from "./APIResponsesTypes";
 
-class Details extends Component {
-  state = { loading: true, showModal: false };
+class Details extends Component<RouteComponentProps<{ id: string }>> {
+  state = {
+    loading: true,
+    showModal: false,
+    animal: "" as Animal,
+    breed: "",
+    city: "",
+    state: "",
+    description: "",
+    name: "",
+    images: [] as string[],
+  };
 
   async componentDidMount() {
     const res = await fetch(
       `http://pets-v2.dev-apis.com/pets?id=${this.props.match.params.id}`
     );
-    const json = await res.json();
+    const json = (await res.json()) as PetAPIResponse;
     this.setState(Object.assign({ loading: false }, json.pets[0]));
   }
 
-  toogleModal = () => this.setState({ showModal: !this.setState.showModal });
-  adopt = () => (window.location = "http://bit.ly/pet-adopt");
+  toggleModal = () => this.setState({ showModal: !this.state.showModal });
+
+  adopt = () => (window.location.href = "http://bit.ly/pet-adopt");
 
   render() {
     if (this.state.loading) {
@@ -36,7 +48,7 @@ class Details extends Component {
           <ThemeContext.Consumer>
             {([theme]) => (
               <button
-                onClick={this.toogleModal}
+                onClick={this.toggleModal}
                 style={{ backgroundColor: theme }}
               >
                 Adopt {name}
@@ -50,7 +62,7 @@ class Details extends Component {
                 <h1>Would you like to adopt {name}?</h1>
                 <div className="buttons">
                   <button onClick={this.adopt}>Yes</button>
-                  <button onClick={this.toogleModal}>No, I am a monster</button>
+                  <button onClick={this.toggleModal}>No</button>
                 </div>
               </div>
             </Modal>
@@ -63,10 +75,10 @@ class Details extends Component {
 
 const DetailsWithRouter = withRouter(Details);
 
-export default function DetailsErrorBoundary(props) {
+export default function DetailsErrorBoundary(): JSX.Element {
   return (
     <ErrorBoundary>
-      <DetailsWithRouter {...props} />
+      <DetailsWithRouter />
     </ErrorBoundary>
   );
 }

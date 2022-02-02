@@ -1,18 +1,22 @@
 import { useState, StrictMode } from "react";
-// import { render } from "react-dom";
-import { Route, Switch, Link } from "react-router-dom";
+import { render } from "react-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store";
+
 import Details from "./Details";
 import SearchParams from "./SearchParams";
-import ThemeContext from "./ThemeContext";
+// import ThemeContext from "./ThemeContext";
 
 const App = () => {
-  const theme = useState("darkblue");
+  // const theme = useState("darkblue");
   return (
-    <StrictMode>
-      <ThemeContext.Provider value={theme}>
-        <div>
+    // <ThemeContext.Provider value={theme}>
+    <Provider store={store}>
+      <div>
+        <Router>
           <header>
-            <Link to="/">Adopt Me v2!</Link>
+            <Link to="/">Adopt Me!</Link>
           </header>
           <Switch>
             <Route path="/details/:id">
@@ -22,10 +26,16 @@ const App = () => {
               <SearchParams />
             </Route>
           </Switch>
-        </div>
-      </ThemeContext.Provider>
-    </StrictMode>
+        </Router>
+      </div>
+    </Provider>
+    // </ThemeContext.Provider>
   );
 };
 
-export default App;
+render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+  document.getElementById("root")
+);
